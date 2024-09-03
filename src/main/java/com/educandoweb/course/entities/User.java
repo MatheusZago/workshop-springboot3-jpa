@@ -3,10 +3,20 @@ package com.educandoweb.course.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-//Tornou Serializable para que possa ser trafegado em rede como bits.
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity //Para que reconheça como uma entidade
+@Table(name = "tb_user") //nome da tabela que vai usar
 public class User implements Serializable{
+//Tornou Serializable para que possa ser trafegado em rede como bits.
 private static final long serialVersionUID = 1L;
 
+	@Id // Para deixar ele como campo primario
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Para ser o autoincrement no DB
 	private Long id;
 	private String name;
 	private String email;
