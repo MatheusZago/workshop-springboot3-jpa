@@ -1,12 +1,15 @@
 package com.educandoweb.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity //Para que reconheça como uma entidade
@@ -22,6 +25,10 @@ private static final long serialVersionUID = 1L;
 	private String email;
 	private String phone;
 	private String password;
+	
+	 //Criando a relação um para muito
+	@OneToMany(mappedBy = "client") //Está dizendo também que ele é mapeado lá como client
+	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
 		
@@ -76,6 +83,10 @@ private static final long serialVersionUID = 1L;
 		this.password = password;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -92,5 +103,6 @@ private static final long serialVersionUID = 1L;
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
 
 }
