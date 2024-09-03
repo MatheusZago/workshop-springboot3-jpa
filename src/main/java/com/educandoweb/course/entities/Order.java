@@ -15,7 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity // para ser reconhecida como uma entidade de banco de dados
+@Entity // para ser reconhecida como uma entidade pelo JPA
 @Table(name = "tb_order") // Mudando nome da tabela para não dar erro
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;

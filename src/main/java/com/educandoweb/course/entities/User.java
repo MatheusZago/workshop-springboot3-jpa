@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity //Para que reconheça como uma entidade
+@Entity //Para o JPA reconheça como uma entidade
 @Table(name = "tb_user") //nome da tabela que vai usar
 public class User implements Serializable{
 //Tornou Serializable para que possa ser trafegado em rede como bits.

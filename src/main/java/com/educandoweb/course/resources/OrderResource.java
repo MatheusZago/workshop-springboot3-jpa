@@ -27,10 +27,10 @@ public class OrderResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value = "/{id}") //Ela aceita um id dinamico
-	public ResponseEntity<Order> findById(@PathVariable Long id ){//PathVariable quer dizer que ele aceita o id do GetMapping
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Order> findById(@PathVariable Long id) { //isso aqui é pra usar o Id de forma dinamica.
 		Order obj = service.findById(id);
-		return ResponseEntity.ok().body(obj); //Retornando o obj
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	
