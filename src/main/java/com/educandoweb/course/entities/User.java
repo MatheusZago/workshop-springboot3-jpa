@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,7 @@ private static final long serialVersionUID = 1L;
 	private String password;
 	
 	 //Criando a relação um para muito
+	@JsonIgnore //Para que não fique chamando infinitamente em loop quando ele chamar o cliente
 	@OneToMany(mappedBy = "client") //Está dizendo também que ele é mapeado lá como client
 	private List<Order> orders = new ArrayList<>();
 	

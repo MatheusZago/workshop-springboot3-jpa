@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,22 +14,25 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity //para ser reconhecida como uma entidade de banco de dados
-@Table(name = "tb_order") //Mudando nome da tabela para não dar erro
-public class Order implements Serializable{
+@Entity // para ser reconhecida como uma entidade de banco de dados
+@Table(name = "tb_order") // Mudando nome da tabela para não dar erro
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id // Para deixar ele como campo primario
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //Para ser o autoincrement no DB
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para ser o autoincrement no DB
 	private Long id;
+
+	// Para formatar o instant
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
-	@ManyToOne //Anotação para fazer a relação muitos para um 
-	@JoinColumn(name = "client_id") //Criou uma chave estrangeira
-	private User client; 
-	
+
+	@ManyToOne // Anotação para fazer a relação muitos para um
+	@JoinColumn(name = "client_id") // Criou uma chave estrangeira
+	private User client;
+
 	public Order() {
-		
+
 	}
 
 	public Order(Long id, Instant moment, User client) {
@@ -76,7 +81,5 @@ public class Order implements Serializable{
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
 }
