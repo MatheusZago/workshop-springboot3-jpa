@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
 //Service depende de Data Access, Resource Depente de Service, e Appl usa o Resource
 @Service //Isso torna essa classe um serviço do String para ser injetada diretamente com o autowired
@@ -24,7 +25,8 @@ public class UserService {
 	public User findById(Long id) {
 		//De novo puxando uma função de Repository
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		 //Ele vai tentar dar um get, se não tiver ele da uma exceção.
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
