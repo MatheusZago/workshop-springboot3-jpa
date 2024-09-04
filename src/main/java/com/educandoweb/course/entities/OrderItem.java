@@ -3,6 +3,7 @@ package com.educandoweb.course.entities;
 import java.io.Serializable;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -13,8 +14,9 @@ import jakarta.persistence.Table;
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private OrderItemPK id;
+	@EmbeddedId //Isso aqui é por ser um ID composto
+	//Se for usar um Id cComposto tem que iniciar
+	private OrderItemPK id = new OrderItemPK();
 
 	private Integer quantity;
 	private Double price;
@@ -31,6 +33,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 
+	@JsonIgnore //Como ele chama ele pelo Id ta colocandoa qui o método pra nn ter loop infinito
 	public Order getOrder() {
 		return id.getOrder();
 	}
