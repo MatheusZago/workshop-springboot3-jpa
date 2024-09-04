@@ -18,16 +18,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity // para ser reconhecida como uma entidade pelo JPA
-@Table(name = "tb_order") // Mudando nome da tabela para não dar erro
+@Entity 
+@Table(name = "tb_order") 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id // Para deixar ele como campo primario
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para ser o autoincrement no DB
 	private Long id;
 
-	// Para formatar o instant
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	

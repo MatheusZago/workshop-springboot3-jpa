@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity //Para o JPA reconhecer como entidade
@@ -19,7 +22,10 @@ import jakarta.persistence.Table;
 public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id // Para deixar ele como campo primario
+	@OneToMany(mappedBy = "id.product") //Para mostrar qual FK ele se relaciona
+	private Set<OrderItem> items = new HashSet<>();
+	
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Para ser o autoincrement no DB
 	private Long id;
 	private String name;
@@ -27,10 +33,8 @@ public class Product implements Serializable{
 	private Double Price;
 	private String imgUrl;
 	
-	//Usando set pra garantir que não tenha um produto com mais de uma ocorrência da mesma categoria.
 	@ManyToMany  
-	//Isso aqui é uma relação de mts para mts
-	@JoinTable(name = "tb_product_category", //Nome da tabela
+	@JoinTable(name = "tb_product_category",
 	joinColumns = @JoinColumn(name = "product_id"), //Foreign key do producto
 	inverseJoinColumns = @JoinColumn(name = "category_id")) //Foreign key da categoria
 	private Set<Category> categories = new HashSet<>(); //É pra garantir que a coleção não comece nula.
@@ -91,6 +95,16 @@ public class Product implements Serializable{
 
 	public Set<Category> getCategories() {
 		return categories;
+	}
+	
+	@JsonIgnore
+	public Set<Order> getOrders(){
+		//Vai percorrer todos os itens, adicionar o Order deles e retornar isso
+		Set<Order> set = new HashSet<>();
+		for(OrderItem x : items) {
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 
 	@Override
