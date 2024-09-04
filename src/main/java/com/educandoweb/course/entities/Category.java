@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity //Para o JPA reconhecer como entidade
 @Table(name = "tb_category")
@@ -22,8 +24,8 @@ public class Category implements Serializable{
 	private Long id;
 	private String name;
 	
-	//Relação entre ele e set.
-	@Transient //Impede que o JPA tente entender (PROVISÓRIO)
+	@JsonIgnore //Para ele não ler por esse lado, para evitar loop infinito de relações
+	@ManyToMany(mappedBy = "categories") //Ele é mapedo pela coleção do categories
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
